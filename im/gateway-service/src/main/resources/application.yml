@@ -1,0 +1,26 @@
+server:
+  port: 8080
+ 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8083/eureka  
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+      - id: dataloaderModule
+        uri: lb://DATALOADER-SERVICE
+        predicates:
+        - Path=/loader/**
+      - id: matchModule
+        uri: lb://MATCH-SERVICE
+        predicates:
+        - Path=/match/**
+      - id: systemconfigModule
+        uri: lb://SYSTEMCONFIG-SERVICE
+        predicates:
+        - Path=/system/**
